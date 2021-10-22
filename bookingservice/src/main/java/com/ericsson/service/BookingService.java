@@ -38,7 +38,9 @@ public class BookingService {
 	
 	public Booking addBooking(Booking booking)
 	{
-		BigDecimal sgdAmount = convertCurrency(booking.getFromCurrency(), SGD_CURRENCY, booking.getAmount());
+		BigDecimal sgdAmount = convertCurrency(booking.getFromCurrency(), SGD_CURRENCY
+				, booking.getAmount(), booking.getNumberOfTickets());
+		
 		booking.setSgdAmount(sgdAmount);
 		
 		return bookingRepository.save(booking);
@@ -48,7 +50,8 @@ public class BookingService {
 	{
 		bookingRepository.findById(booking.getId()).orElseThrow(null);
 		
-		BigDecimal sgdAmount = convertCurrency(booking.getFromCurrency(), SGD_CURRENCY, booking.getAmount());
+		BigDecimal sgdAmount = convertCurrency(booking.getFromCurrency(), SGD_CURRENCY
+												, booking.getAmount(), booking.getNumberOfTickets());
 		booking.setSgdAmount(sgdAmount);
 		
 		bookingRepository.save(booking);
@@ -61,7 +64,7 @@ public class BookingService {
 		return true;
 	}	
 	
-	public BigDecimal convertCurrency(String fromCurr, String toCurr, BigDecimal amount) {
+	public BigDecimal convertCurrency(String fromCurr, String toCurr, BigDecimal amount, int noOfTickets) {
 		
 		//check if input amount equal to zero then return zero
 		if (amount.compareTo(new BigDecimal("0.00")) == 0) {
@@ -84,6 +87,6 @@ public class BookingService {
 		
 		System.out.println("currency conversion :" + currencyResponse.getSgd());
 
-		return (currencyResponse.getSgd().multiply(amount));
+		return (currencyResponse.getSgd().multiply(amount.multiply(BigDecimal.valueOf(noOfTickets))));
 	}
 }

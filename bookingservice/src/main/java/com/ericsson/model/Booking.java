@@ -14,6 +14,7 @@ public class Booking {
 	
 	private String date;
 	private String time;
+	private String venue;
 	private int numberOfTickets;
 	private BigDecimal amount;
 	private String fromCurrency;
@@ -132,16 +133,41 @@ public class Booking {
 	 * @param toCurrency
 	 * @param sgdAmount
 	 */
-	public Booking(int id, String date, String time, int numberOfTickets, BigDecimal amount, String fromCurrency,
-			String toCurrency, BigDecimal sgdAmount) {
+	/**
+	 * @param id
+	 * @param date
+	 * @param time
+	 * @param venue
+	 * @param numberOfTickets
+	 * @param amount
+	 * @param fromCurrency
+	 * @param toCurrency
+	 * @param sgdAmount
+	 */
+	public Booking(int id, String date, String time, String venue, int numberOfTickets, BigDecimal amount,
+			String fromCurrency, String toCurrency, BigDecimal sgdAmount) {
 		super();
 		this.id = id;
 		this.date = date;
 		this.time = time;
+		this.venue = venue;
 		this.numberOfTickets = numberOfTickets;
 		this.amount = amount;
 		this.fromCurrency = fromCurrency;
 		this.toCurrency = toCurrency;
 		this.sgdAmount = sgdAmount;
 	}
+	/**
+	 * @return the venue
+	 */
+	public String getVenue() {
+		return venue;
+	}
+	/**
+	 * @param venue the venue to set
+	 */
+	public void setVenue(String venue) {
+		this.venue = venue;
+	}
+
 }
