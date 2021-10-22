@@ -8,6 +8,32 @@ import javax.persistence.Entity;
 
 @Entity
 public class Booking {
+	/**
+	 * @param id
+	 * @param date
+	 * @param time
+	 * @param venue
+	 * @param numberOfTickets
+	 * @param amount
+	 * @param fromCurrency
+	 * @param sgdAmount
+	 * @param sgdCurrency
+	 * @param sgdTotalAmount
+	 */
+	public Booking(int id, String date, String time, String venue, int numberOfTickets, BigDecimal amount,
+			String fromCurrency, BigDecimal sgdAmount, String sgdCurrency, BigDecimal sgdTotalAmount) {
+		super();
+		this.id = id;
+		this.date = date;
+		this.time = time;
+		this.venue = venue;
+		this.numberOfTickets = numberOfTickets;
+		this.amount = amount;
+		this.fromCurrency = fromCurrency;
+		this.sgdAmount = sgdAmount;
+		this.sgdCurrency = sgdCurrency;
+		this.sgdTotalAmount = sgdTotalAmount;
+	}
 	@Id
 	@GeneratedValue
 	private int id;
@@ -18,14 +44,16 @@ public class Booking {
 	private int numberOfTickets;
 	private BigDecimal amount;
 	private String fromCurrency;
-	private String toCurrency;
+	
 	private BigDecimal sgdAmount;
+	private String sgdCurrency;
+	private BigDecimal sgdTotalAmount;
 	
 	/**
 	 * 
 	 */
 	public Booking() {
-		toCurrency = "sgd";
+		sgdCurrency = "sgd";
 	}
 	/**
 	 * @return the id
@@ -99,18 +127,7 @@ public class Booking {
 	public void setFromCurrency(String fromCurrency) {
 		this.fromCurrency = fromCurrency;
 	}
-	/**
-	 * @return the toCurrency
-	 */
-	public String getToCurrency() {
-		return toCurrency;
-	}
-	/**
-	 * @param toCurrency the toCurrency to set
-	 */
-	public void setToCurrency(String toCurrency) {
-		this.toCurrency = toCurrency;
-	}
+
 	/**
 	 * @return the sgdAmount
 	 */
@@ -144,19 +161,7 @@ public class Booking {
 	 * @param toCurrency
 	 * @param sgdAmount
 	 */
-	public Booking(int id, String date, String time, String venue, int numberOfTickets, BigDecimal amount,
-			String fromCurrency, String toCurrency, BigDecimal sgdAmount) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.time = time;
-		this.venue = venue;
-		this.numberOfTickets = numberOfTickets;
-		this.amount = amount;
-		this.fromCurrency = fromCurrency;
-		this.toCurrency = toCurrency;
-		this.sgdAmount = sgdAmount;
-	}
+
 	/**
 	 * @return the venue
 	 */
@@ -168,6 +173,30 @@ public class Booking {
 	 */
 	public void setVenue(String venue) {
 		this.venue = venue;
+	}
+	/**
+	 * @return the sgdTotalAmount
+	 */
+	public BigDecimal getSgdTotalAmount() {
+		return sgdTotalAmount;
+	}
+	/**
+	 * @param sgdTotalAmount the sgdTotalAmount to set
+	 */
+	public void setSgdTotalAmount(BigDecimal sgdTotalAmount) {
+		this.sgdTotalAmount = sgdTotalAmount;
+	}
+	/**
+	 * @return the sgdCurrency
+	 */
+	public String getSgdCurrency() {
+		return sgdCurrency;
+	}
+	/**
+	 * @param sgdCurrency the sgdCurrency to set
+	 */
+	public void setSgdCurrency(String sgdCurrency) {
+		this.sgdCurrency = sgdCurrency;
 	}
 
 }

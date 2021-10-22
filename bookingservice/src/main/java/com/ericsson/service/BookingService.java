@@ -22,7 +22,6 @@ public class BookingService {
 	@Autowired
 	private Environment env;
 	private String currencyURL;
-	private final String SGD_CURRENCY = "sgd";
 	
 	/**
 	 * @return the todos
@@ -38,10 +37,12 @@ public class BookingService {
 	
 	public Booking addBooking(Booking booking)
 	{
-		BigDecimal sgdAmount = convertCurrency(booking.getFromCurrency(), SGD_CURRENCY
-				, booking.getAmount(), booking.getNumberOfTickets());
+		BigDecimal sgdAmount = convertCurrency(booking.getFromCurrency()
+											 , booking.getSgdCurrency()
+											 , booking.getAmount());
 		
 		booking.setSgdAmount(sgdAmount);
+		booking.setSgdTotalAmount(sgdAmount.multiply(BigDecimal.valueOf(booking.getNumberOfTickets())));
 		
 		return bookingRepository.save(booking);
 	}
@@ -50,9 +51,12 @@ public class BookingService {
 	{
 		bookingRepository.findById(booking.getId()).orElseThrow(null);
 		
-		BigDecimal sgdAmount = convertCurrency(booking.getFromCurrency(), SGD_CURRENCY
-												, booking.getAmount(), booking.getNumberOfTickets());
+		BigDecimal sgdAmount = convertCurrency(booking.getFromCurrency()
+				 							 , booking.getSgdCurrency()
+				 							 , booking.getAmount());
+
 		booking.setSgdAmount(sgdAmount);
+		booking.setSgdTotalAmount(sgdAmount.multiply(BigDecimal.valueOf(booking.getNumberOfTickets())));
 		
 		bookingRepository.save(booking);
 		return true;
@@ -64,7 +68,7 @@ public class BookingService {
 		return true;
 	}	
 	
-	public BigDecimal convertCurrency(String fromCurr, String toCurr, BigDecimal amount, int noOfTickets) {
+	public BigDecimal convertCurrency(String fromCurr, String toCurr, BigDecimal amount) {
 		
 		//check if input amount equal to zero then return zero
 		if (amount.compareTo(new BigDecimal("0.00")) == 0) {
@@ -87,6 +91,6 @@ public class BookingService {
 		
 		System.out.println("currency conversion :" + currencyResponse.getSgd());
 
-		return (currencyResponse.getSgd().multiply(amount.multiply(BigDecimal.valueOf(noOfTickets))));
+		return (currencyResponse.getSgd().multiply(amount));
 	}
 }
